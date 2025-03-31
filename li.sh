@@ -37,12 +37,12 @@ li() {
 	    
 	    # redirect 'file not found' stderrs to /dev/null.
 	    # ls returns the files sorted alphabetically
-	    file=`ls -1 ${f}/index.txt ${f}/readme.* ${f}/Readme.* ${f}/README.* ${f}/readme ${f}/Readme ${f}/README -R 2>/dev/null | head -1` # ls -1: one by line
+	    file=$(ls -1 ${f}/index.txt ${f}/readme.* ${f}/Readme.* ${f}/README.* ${f}/readme ${f}/Readme ${f}/README -R 2>/dev/null | head -1) # ls -1: one by line
 	    # echo "file: " $file
 	    # is there and index.txt?
 	    if [[ -f $file ]]; then
 		# get the name without path
-		basename=`basename $f`
+		basename=$(basename $f)
 		echo -n "$basename: "
 		# print the first non-heading line (the first line starting with a word character)
 		egrep "^\w" --max-count 1 $file
@@ -77,7 +77,7 @@ i() {
 	    
     # redirect 'file not found' stderrs to /dev/null.
     # ls returns the files sorted alphabetically
-    f=`ls -1 index.txt readme.* Readme.* README.* readme Readme README -R 2>/dev/null | head -1` # ls -1: one by line
+    f=$(ls -1 index.txt readme.* Readme.* README.* readme Readme README -R 2>/dev/null | head -1) # ls -1: one by line
 
     # -f: check that f is a file
     if [[ -f $f ]]; then

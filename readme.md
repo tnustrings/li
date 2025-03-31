@@ -18,8 +18,13 @@ tagid-chrome: languages word by word chrome extension
 
 ## setup
 
-paste the code from .bash_profile in your ~/.bash_profile (or comparable
-file), then say:
+in your ~/.bash_profile (or comparable file), source `li.sh`:
+
+```
+source ~/path/to/li/li.sh
+```
+
+then source the `.bash_profile` for the changes to take effect.
 
 ```
 source ~/.bash_profile
