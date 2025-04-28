@@ -1,0 +1,141 @@
+# li
+
+li.sh holds li, ci and i.
+
+``//li.sh:
+``li``
+``ci``
+``i``
+``
+
+## li
+
+li lists directories along with a description line from their index.txt or readme.md
+
+the description line is the first line starting with a word character.
+
+-a (all) flag: list also the directories with no index.txt or readme.md
+
+issue: ignores arguments
+
+``/li:
+li() {
+    ``.``
+}
+
+look for a -a (all) flag with getopts
+see https://stackoverflow.com/a/21128172
+
+``
+    a_flag=''
+    while getopts 'a' flag; do # for non-boolean flags follow flag letter by colon
+	case "${flag}" in
+	    a) a_flag='true' ;;
+	esac
+    done
+``
+
+is a dir given, we run li for the given dir, else we run it for the
+current dir.
+
+``
+    if [[ $# > 0 ]]; then
+	# if not a directory, return? 
+	if [[ ! -d $1 ]]; then
+	    return
+	fi
+	where=$1/*
+    else
+	where=*
+    fi
+``
+
+go through the files, take the directories and see if there's an
+index.txt / readme in them.
+
+``
+    for f in $where; do
+	# is f a directory?
+	if [[ -d $f ]]; then
+            ``.``
+        fi
+    done
+``
+
+we'd like to include a range of readme capitalization patterns, but
+there is no case-insensitive ls. listing all files and grep -i
+"readme" makes it slow. so maybe ls and take the first (but is that
+really quicker?)
+
+redirect 'file not found' stderrs to /dev/null.
+
+ls returns the files sorted alphabetically.
+
+``
+	    file=$(ls -1 ${f}/index.txt ${f}/readme.* ${f}/Readme.* ${f}/README.* ${f}/readme ${f}/Readme ${f}/README -R 2>/dev/null | head -1) # ls -1: one by line
+      	    if [[ -f $file ]]; then
+                ``there``
+            else
+                ``not there``
+            fi
+``
+
+is the index/readme is there, print the directory name without path
+(basename) and followed by the first non-heading line from the
+index/readme (the first line starting with a word character).
+
+``./there:
+
+		basename=$(basename $f)
+		echo -n "$basename: "
+		egrep "^\w" --max-count 1 $file
+``                
+
+if the index/readme is not there, and the -a flag is set, print the directory.
+
+``../not there:
+		if [[ $a_flag == "true" ]]; then
+		    echo $f
+		fi
+``
+
+# ci
+
+ci is cd followed by li.
+
+``/ci:
+ci() {
+    # cd into the given directory
+    cd "$1"
+    # show li
+    li
+}
+``
+
+# i
+
+i shows index.txt or readme.md with less
+
+``
+i() {
+    ``.``
+}
+``
+
+get the file the same way li() does.
+
+``
+    f=$(ls -1 index.txt readme.* Readme.* README.* readme Readme README -R 2>/dev/null | head -1) # ls -1: one by line
+``
+
+if f is a file (-f option), show it. filter it through ~/.i_md, if
+that's there.
+
+``
+    if [[ -f $f ]]; then
+	clear # so that print starts at the top of the screen
+	cat $f |
+	    { if [ -f ~/.i_md ]; then ~/.i_md; else cat -; fi } | # if script for markdown-rendering there, use it
+	    less --quit-if-one-screen # --clear-screen: start printing at the top of the screen
+    fi
+``
