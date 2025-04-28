@@ -2,6 +2,9 @@
 
 list index (or readme)
 
+li shows a short description for each directory taken from the
+directory's `index.txt` or `readme`.
+
 ```
 $ li
 codetext: code with text
@@ -14,11 +17,11 @@ tagid-chrome: languages word by word chrome extension
 
 `li`: list directories with the first non-heading line from their index.txt or readme\
 `ci`: cd followed by li\
-`i`: show index.txt or readme\
+`i`: show index.txt or readme
 
 ## setup
 
-in your ~/.bash_profile (or comparable file), source `li.sh`:
+in your `~/.bash_profile` (or comparable file), source `li.sh`:
 
 ```
 source ~/path/to/li/li.sh
@@ -32,10 +35,10 @@ source ~/.bash_profile
 
 ## more options
 
-`li -a`: list all directories, not just those containing an index.txt
-or readme.
+`li -a`: list all directories, not just those containing an `index.txt`
+or `readme`.
 
-to customize markdown rendering for `i`, create a file named ~/.i_md
+to customize markdown rendering for `i`, create a file named `~/.i_md`
 and put in the markdown rendering command, e.g.
 
 ```
