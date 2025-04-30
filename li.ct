@@ -22,6 +22,7 @@ issue: ignores arguments
 li() {
     ``.``
 }
+``
 
 look for a -a (all) flag with getopts
 see https://stackoverflow.com/a/21128172
@@ -89,7 +90,7 @@ index/readme (the first line starting with a word character).
 		basename=$(basename $f)
 		echo -n "$basename: "
 		egrep "^\w" --max-count 1 $file
-``                
+``
 
 if the index/readme is not there, and the -a flag is set, print the directory.
 
